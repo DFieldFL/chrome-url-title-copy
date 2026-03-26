@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL &amp; Title Copier</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <div class="popup-title">
+        <image src="icons/icon16.png" />
+        <span>URL &amp; Title Copier</span>
+      </div>
+      <a href="#" id="settings-link" class="settings-btn" title="Settings" aria-label="Open settings">
+        <span aria-hidden="true">⚙️</span>
+      </a>
+    </header>
+
+    <div class="info-section">
+      <label for="field-title" class="field-label">Title</label>
+      <input type="text" id="field-title" class="info-field" readonly aria-label="Page title" placeholder="Loading...">
+
+      <label for="field-url" class="field-label">URL</label>
+      <input type="text" id="field-url" class="info-field" readonly aria-label="Page URL" placeholder="Loading...">
+    </div>
+
+    <div id="error-msg" class="error-msg" role="alert" hidden></div>
+
+    <div class="buttons-row">
+      <button id="btn-plain" class="copy-btn" aria-label="Copy as plain text">Plain</button>
+      <button id="btn-markdown" class="copy-btn" aria-label="Copy as Markdown link">Markdown</button>
+      <button id="btn-html" class="copy-btn" aria-label="Copy as HTML anchor">HTML</button>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite">Copied!</div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
