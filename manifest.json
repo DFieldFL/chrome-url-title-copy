@@ -3,7 +3,7 @@
   "name": "URL & Title Copier",
   "version": "1.0.0",
   "description": "Copy the current page title and URL as plain text, Markdown, or HTML via shortcuts or right click. Includes Rich based pasting.",
-  "permissions": ["clipboardWrite", "activeTab", "contextMenus", "storage", "scripting"],
+  "permissions": ["clipboardWrite", "activeTab", "storage", "scripting"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html",

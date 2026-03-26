@@ -86,34 +86,6 @@ async function handleCopy(format, tab) {
   }
 }
 
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.removeAll(() => {
-    chrome.contextMenus.create({
-      id: 'parent',
-      title: 'Copy Page Info',
-      contexts: ['page', 'frame', 'link', 'selection', 'image', 'editable']
-    });
-    chrome.contextMenus.create({
-      id: 'copy-plain',
-      title: 'Copy as Plain Text',
-      parentId: 'parent',
-      contexts: ['page', 'frame', 'link', 'selection', 'image', 'editable']
-    });
-    chrome.contextMenus.create({
-      id: 'copy-markdown',
-      title: 'Copy as Markdown',
-      parentId: 'parent',
-      contexts: ['page', 'frame', 'link', 'selection', 'image', 'editable']
-    });
-    chrome.contextMenus.create({
-      id: 'copy-html',
-      title: 'Copy as HTML',
-      parentId: 'parent',
-      contexts: ['page', 'frame', 'link', 'selection', 'image', 'editable']
-    });
-  });
-});
-
 chrome.commands.onCommand.addListener(async (command) => {
   try {
     // Use lastFocusedWindow rather than currentWindow — service workers have no
@@ -124,14 +96,6 @@ chrome.commands.onCommand.addListener(async (command) => {
     }
   } catch (err) {
     console.error('Command handler error:', err.message);
-  }
-});
-
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-  try {
-    await handleCopy(info.menuItemId, tab);
-  } catch (err) {
-    console.error('Context menu handler error:', err.message);
   }
 });
 

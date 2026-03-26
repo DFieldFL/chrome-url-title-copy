@@ -15,7 +15,6 @@ A lightweight Chromium extension that copies the current page title and URL to y
   - **HTML** — `<a href="https://example.com">Page Title</a>`
 - **Toolbar popup** — click the extension icon to see the title & URL and copy in one click
 - **Keyboard shortcuts** — copy without opening the popup
-- **Right-click context menu** — *Copy Page Info* sub-menu on any page
 - **Settings page** — edit the plain-text templates and view/change shortcuts
 - **Light & dark mode** support
 
@@ -50,7 +49,7 @@ No build step or `npm install` required. All files are plain HTML / CSS / JS.
 ```
 /
 ├── manifest.json     # MV3 manifest — permissions, commands, icons
-├── background.js     # Service worker — keyboard shortcuts, context menu, clipboard writes
+├── background.js     # Service worker — keyboard shortcuts, clipboard writes
 ├── popup.html/js/css # Toolbar popup UI
 ├── options.html/js/css  # Settings page
 ├── content.js        # Minimal placeholder (no always-on injection)
@@ -66,9 +65,8 @@ No build step or `npm install` required. All files are plain HTML / CSS / JS.
 | `activeTab` | Read the title & URL of the active tab on demand |
 | `clipboardWrite` | Write to the system clipboard |
 | `scripting` | Inject the clipboard-write function into the active tab (MV3 pattern) |
-| `contextMenus` | Add the right-click *Copy Page Info* menu |
 | `storage` | Persist custom templates via `chrome.storage.sync` |
-| `host_permissions: <all_urls>` | Allow keyboard shortcuts and context-menu copies to work on any page without a per-site access prompt |
+| `host_permissions: <all_urls>` | Allow keyboard shortcuts to work on any page without a per-site access prompt |
 
 All processing is local. The extension makes no external network requests.
 
