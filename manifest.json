@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "URL & Title Copier",
   "version": "1.0.0",
-  "description": "Copy the current page title and URL as plain text, Markdown, or HTML via shortcuts or right-click. Additionally with Rich based pasting option for apps like Slack, Teams, Google Docs, etc. All running locally with no data being sent to any external sources.",
+  "description": "Copy the current page title and URL as plain text, Markdown, or HTML via shortcuts or right click. Includes Rich based pasting.",
   "permissions": ["clipboardWrite", "activeTab", "contextMenus", "storage", "scripting"],
   "host_permissions": ["<all_urls>"],
   "action": {
