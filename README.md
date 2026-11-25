@@ -50,6 +50,7 @@ No build step or `npm install` required. All files are plain HTML / CSS / JS.
 /
 ├── manifest.json     # MV3 manifest — permissions, commands, icons
 ├── background.js     # Service worker — keyboard shortcuts, clipboard writes
+├── offscreen.html/js # Hidden document that performs the clipboard write for shortcuts
 ├── popup.html/js/css # Toolbar popup UI
 ├── options.html/js/css  # Settings page
 ├── content.js        # Minimal placeholder (no always-on injection)
@@ -64,9 +65,8 @@ No build step or `npm install` required. All files are plain HTML / CSS / JS.
 |---|---|
 | `activeTab` | Read the title & URL of the active tab on demand |
 | `clipboardWrite` | Write to the system clipboard |
-| `scripting` | Inject the clipboard-write function into the active tab (MV3 pattern) |
+| `offscreen` | Run a hidden document that can write the clipboard for keyboard shortcuts regardless of what has focus (e.g. the address bar) |
 | `storage` | Persist custom templates via `chrome.storage.sync` |
-| `host_permissions: <all_urls>` | Allow keyboard shortcuts to work on any page without a per-site access prompt |
 
 All processing is local. The extension makes no external network requests.
 
