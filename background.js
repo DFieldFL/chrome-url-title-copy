@@ -33,23 +33,32 @@ async function getTemplates() {
   }
 }
 
-async function copyToClipboard(tabId, htmlContent, plainText) {
-  await chrome.scripting.executeScript({
-    target: { tabId },
-    // async func so Chrome awaits the Promise before tearing down the script frame.
-    // executeScript called from a keyboard shortcut / context-menu handler propagates
-    // the user activation into the injected script, making navigator.clipboard.write
-    // available without needing the deprecated execCommand.
-    func: async (html, plain) => {
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          'text/html':  new Blob([html],  { type: 'text/html'  }),
-          'text/plain': new Blob([plain], { type: 'text/plain' })
-        })
-      ]);
-    },
-    args: [htmlContent, plainText]
+let creatingOffscreenDocument;
+
+async function ensureOffscreenDocument() {
+  const existingContexts = await chrome.runtime.getContexts({
+    contextTypes: ['OFFSCREEN_DOCUMENT'],
+    documentUrls: [chrome.runtime.getURL('offscreen.html')]
   });
+  if (existingContexts.length > 0) return;
+
+  if (!creatingOffscreenDocument) {
+    creatingOffscreenDocument = chrome.offscreen.createDocument({
+      url: 'offscreen.html',
+      reasons: ['CLIPBOARD'],
+      justification: 'Write the title/URL hyperlink to the clipboard from a keyboard shortcut regardless of which element currently has focus (e.g. the address bar).'
+    });
+  }
+  await creatingOffscreenDocument;
+  creatingOffscreenDocument = null;
+}
+
+async function copyToClipboard(htmlContent, plainText) {
+  await ensureOffscreenDocument();
+  const response = await chrome.runtime.sendMessage({ type: 'write-clipboard', html: htmlContent, plain: plainText });
+  if (!response?.ok) {
+    throw new Error('Offscreen clipboard write failed.');
+  }
 }
 
 async function handleCopy(format, tab) {
@@ -79,7 +88,7 @@ async function handleCopy(format, tab) {
 
   if (plainText !== undefined) {
     try {
-      await copyToClipboard(tab.id, htmlLink, plainText);
+      await copyToClipboard(htmlLink, plainText);
     } catch (err) {
       console.error('Copy failed:', err.message);
     }
